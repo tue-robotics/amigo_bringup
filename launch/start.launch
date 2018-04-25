@@ -29,7 +29,6 @@
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
-                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
                 "/>
                 <arg name="NAME" value ="hardware"/>
@@ -37,7 +36,16 @@
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
-            
+
+            <include file="$(find robot_launch_files)/launch/hardware/dynamixels.launch" >
+                <arg name="machine" value="amigo1"/>
+                <arg name="dynamixel_controller_args"
+                  value="--manager=dxl_manager
+                      --port=pan_tilt_port
+                      neck_pan
+                      neck_tilt"/>
+            </include>
+
             <!-- BODYPART RESETTER ROBOCUP HACK -->
             <node name="spindle_resetter" pkg="robot_launch_files" type="bodypart_resetter.py" args="amigo spindle 1"/>
 
