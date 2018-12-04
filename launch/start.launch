@@ -21,7 +21,6 @@
         </include>
 
         <group if="$(optenv ROBOT_REAL false)">
-
             <!-- OROCOS HARDWARE -->
             <include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
                 <arg name="DEPLOYER_ARGS" value="--DeployerName HARDWARE
@@ -38,7 +37,6 @@
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
-
             <!-- BODYPART RESETTER ROBOCUP HACK -->
             <node name="spindle_resetter" pkg="robot_launch_files" type="bodypart_resetter.py" args="amigo spindle 1"/>
 
