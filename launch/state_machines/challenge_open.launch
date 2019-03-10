@@ -11,12 +11,7 @@
 		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
 			<arg name="machine" value="amigo2" />
 			<arg name="faces_db" value="~/MEGA/data/$(optenv ROBOT_ENV robotics_testlabs)/models/openface_ros/faces.pkl" />
-		</include>
-
-		<!-- Start the simple webserver to handle static files -->
-		<node pkg="tue_mobile_ui" type="webserver.py" name="webserver_amigo2" output="log">
-			<rosparam command="load" file="$(env ROBOT_BRINGUP_PATH)/parameters/interaction/mobile_ui_server.yaml" />
-		</node>
+		</include
 	</group>
 
 	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
