@@ -16,6 +16,7 @@ plugins:
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: amigo
+      urdf_rosparam: /amigo/robot_description
 
 - name: navigation
   lib: libed_navigation_plugin.so
