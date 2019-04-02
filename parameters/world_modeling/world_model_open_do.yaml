@@ -21,6 +21,8 @@ plugins:
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: amigo
+      urdf_rosparam: /amigo/robot_description
+      tf_prefix: ""
 
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
@@ -69,9 +71,9 @@ plugins:
       initial_pose_topic: /amigo/initialpose
       num_particles: 500
       initial_pose:
-          x: $(env ROBOT_INIT_X)
-          y: $(env ROBOT_INIT_Y)
-          rz: $(env ROBOT_INIT_PHI)
+          x: $(env ROBOT_INIT_X 0.0)
+          y: $(env ROBOT_INIT_Y 0.0)
+          rz: $(env ROBOT_INIT_PHI 0.0)
       laser_model:
           topic: /amigo/base_laser/scan
           num_beams: 100
