@@ -2,25 +2,38 @@
 
 <launch>
 
-    <group ns="amigo">
+    <arg name="robot_name" value="amigo" />
+
+    <group ns="$(arg robot_name)">
 
         <!-- ROBOCUP RECORDER -->
         <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
             <arg name="machine" value="amigo2" />
         </include>
 
-    		<!-- NAVIGATION -->
-    		<include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-    			<arg name="machine" value="amigo2"/>
-    		</include>
+        <!-- NAVIGATION -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="amigo2"/>
+        </include>
 
-    		<!-- WORLD MODEL -->
-    		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-    			<arg name="machine" value="amigo2"/>
-    			<!--arg name="config" value="world_modeling/world_model_r5cop.yaml"/-->
-    		</include>
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="amigo2"/>
+            <!--arg name="config" value="world_modeling/world_model_r5cop.yaml"/-->
+        </include>
 
-		    <node name="ed_server_bridge" pkg="multirobot_communication" type="ed_server_bridge.py">
+        <!-- IMAGE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
+            <arg name="machine" value="amigo2"/>
+        </include>
+
+        <!-- PEOPLE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
+            <arg name="machine" value="amigo2"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
+        <node name="ed_server_bridge" pkg="multirobot_communication" type="ed_server_bridge.py">
             <param name="ip" value="192.168.2.92" />
             <param name="port" value="3000" />
         </node>
@@ -39,7 +52,7 @@
 
     </group>
 
-	<!-- Start the challenge -->
-	<node pkg="r5cop_demo" type="challenge_amigo.py" name="state_machine" args="amigo" output="screen" required="true"/>
+    <!-- Start the challenge -->
+    <node pkg="r5cop_demo" type="challenge_amigo.py" name="state_machine" args="amigo" output="screen" required="true"/>
 
 </launch>
