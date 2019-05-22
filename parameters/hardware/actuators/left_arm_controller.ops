@@ -38,11 +38,11 @@ var double 	ENC2SI_EM					= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double 	ENC2SI_WM					= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double 	ENC2SI_HM 					= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var array 	ENC2SI						= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_EM,	ENC2SI_WM,	ENC2SI_WM,	ENC2SI_HM )
-var array 	SENSORTORQUES_C1 			= array(	35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		32.34	)
-var array 	SENSORTORQUES_C2 			= array(	-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.2		)
-var array 	SENSORTORQUES_C3 			= array(	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-80.0	)
-var double 	GRIPPERFORCE				= 40.0;
-var double 	GRIPPERHOMINGFORCE			= 28.0;
+var array 	SENSORTORQUES_C1 			= array(	35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		80.0	)
+var array 	SENSORTORQUES_C2 			= array(	-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.05	)
+var array 	SENSORTORQUES_C3 			= array(	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-106.0	)
+var double 	GRIPPERFORCE				= 22.0;
+var double 	GRIPPERHOMINGFORCE			= 7.0;
 var int 	N							= 8
 var int 	BODYPARTNR 					= 3
 var string 	BODYPARTNAME 				= "left_arm"
@@ -76,6 +76,8 @@ EtherCATread.left_arm1_matrixtransform8 = array( 0.0,  0.0,  0.0,  0.0,  0.0,  0
 EtherCATread.AddSaturation_E(BODYPARTNAME,1, LOWERJOINTLIMIT, UPPERJOINTLIMIT)
 EtherCATread.AddMsgOut_E(BODYPARTNAME, 1,JOINT_NAMES);
 EtherCATread.AddTorqueSensor_A(BODYPARTNAME, 1, SENSORTORQUES_C1, SENSORTORQUES_C2, SENSORTORQUES_C3)
+#EtherCATread.AddMsgOut_A(BODYPARTNAME,1); # Can be used for force sensor tuning
+#EtherCATread.AddMsgOut_A(BODYPARTNAME,2); # Can be used for pos sensor tuning
 
 # EtherCATwrite
 EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
@@ -251,6 +253,8 @@ stream("EtherCATread.left_arm_EoutMsg1", 			ros.topic("/amigo/left_arm/measureme
 stream("LPERA_GripperControl.gripper_measurement", 	ros.topic("/amigo/left_arm/gripper/measurements"))
 stream("LPERA_GripperControl.gripper_command", 		ros.topic("/amigo/left_arm/gripper/references"))
 stream("LPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
+#stream("EtherCATread.left_arm_AoutMsg1",            ros.topic("/amigo/left_arm/analogin1_force"));
+#stream("EtherCATread.left_arm_AoutMsg2",            ros.topic("/amigo/left_arm/analogin2_pos"));
 
 ### Handover Detector
 connect("EtherCATread.left_arm_Aout1",				"LPERA_HandoverDetector.torques", 			ConnPolicy() );
