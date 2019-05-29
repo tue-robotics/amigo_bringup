@@ -21,8 +21,7 @@
             <arg name="machine" value="amigo2" />
         </include>
 
-		<include file="$(find telegram_robot)/launch/conversation_engine_bot.launch" >
-		</include>
+        <include file="$(find telegram_robot)/launch/conversation_engine_bot.launch" />
 
     </group>
 
