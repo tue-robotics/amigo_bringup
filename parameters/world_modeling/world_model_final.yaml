@@ -40,6 +40,7 @@ plugins:
 
 - name: kinect_navigation
   lib: libed_kinect_navigation_plugin.so
+  enabled: $(env ROBOT_REAL false)
   parameters:
       depth_sensor_integration:
           frame_id: /map
